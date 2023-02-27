@@ -1,7 +1,10 @@
 using Fhi.KompetanseUtvikling.DesignPattern.Application.VilleDyr;
 using Fhi.KompetanseUtvikling.DesignPattern.Domene.Enum;
+using Fhi.KompetanseUtvikling.DesignPattern.Domene.Factory.Abstract;
 using Fhi.KompetanseUtvikling.DesignPattern.Domene.Factory.KattFactory;
 using Fhi.KompetanseUtvikling.DesignPattern.Domene.Factory.KrokodilleFactory;
+using Fhi.KompetanseUtvikling.DesignPattern.Domene.Factory.SlangeFactory;
+using Fhi.KompetanseUtvikling.DesignPattern.Domene.Interface.abstractfactory;
 using Fhi.KompetanseUtvikling.DesignPattern.Domene.Interface.factory;
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,44 +22,10 @@ public class VilleDyrController : ControllerBase
     }
 
     [HttpGet(Name = "VilleDyr")]
-    public ActionResult<VilleDyrIKontinent> Get([FromServices] VilleDyrService villeDyrService, Domene.Enum.Kontinent kontinent= Domene.Enum.Kontinent.SørAmerika)
+    public ActionResult<VilleDyrIKontinent> Get([FromServices] VilleDyrService villeDyrService, Kontinent kontinent= Kontinent.SørAmerika)
     {
-        IKattFactory? kattFactory = null;
-        IKrokodilleFactory? krokodilleFactory = null;
-        ISlangeFactory? slangeFactory = null;
-        switch (kontinent)
-        {
-            case Kontinent.SørAmerika:
-                kattFactory = new SørAmerikaKattFactory();
-                krokodilleFactory = new SørAmerikaKrokodilleFactory();
-                slangeFactory = new SørAmerikaSlangeFactory();
-                break;
-
-            case Kontinent.NordAmerika:
-                kattFactory = new NordAmerikaKattFactory();
-                krokodilleFactory = new NordAmerikaKrokodilleFactory();
-                slangeFactory = new NordAmerikaSlangeFactory();
-                break;
-               
-
-            case Kontinent.Asia:
-                kattFactory = new AsiaKattFactory();
-                krokodilleFactory = new AsiaKrokodilleFactory();
-                slangeFactory = new AsiaSlangeFactory();
-                break;
-            case Kontinent.Afrika:
-                kattFactory = new AfrikaKattFactory();
-                krokodilleFactory = new AfrikaKrokodilleFactory();
-                slangeFactory = new AfrikaSlangeFactory();
-                break;
-            case Kontinent.Australia:
-                krokodilleFactory = new AustrliaKrokodilleFactory();
-                slangeFactory = new AustraliaSlangeFactory();
-                break;
-        }
-
-
-        VilleDyrIKontinent villeDyrIKontinent = villeDyrService.FinnVilleDyrIKontinent(kontinent, kattFactory, krokodilleFactory, slangeFactory);
+    
+        VilleDyrIKontinent villeDyrIKontinent = villeDyrService.FinnVilleDyrIKontinent(kontinent, AbstractDyrFactory.Create(kontinent));
         return Ok(villeDyrIKontinent);
 
     }

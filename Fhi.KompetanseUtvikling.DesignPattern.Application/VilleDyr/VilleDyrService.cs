@@ -1,18 +1,16 @@
-﻿using Fhi.KompetanseUtvikling.DesignPattern.Domene.Entities.Krokodille;
-using Fhi.KompetanseUtvikling.DesignPattern.Domene.Entities.Slange;
-using Fhi.KompetanseUtvikling.DesignPattern.Domene.Enum;
-using Fhi.KompetanseUtvikling.DesignPattern.Domene.Interface.factory;
+﻿using Fhi.KompetanseUtvikling.DesignPattern.Domene.Enum;
+using Fhi.KompetanseUtvikling.DesignPattern.Domene.Interface.abstractfactory;
 
 namespace Fhi.KompetanseUtvikling.DesignPattern.Application.VilleDyr;
 public class VilleDyrService
 {
-    public VilleDyrIKontinent FinnVilleDyrIKontinent(Kontinent kontinent, IKattFactory? kattFactory, IKrokodilleFactory? krokodilleFactory, ISlangeFactory? slangeFactory)
+    public VilleDyrIKontinent FinnVilleDyrIKontinent(Kontinent kontinent, IAbstractDyrFactory? abstractDyrFactory)
     {
         VilleDyrIKontinent villeDyrIKontinent = new VilleDyrIKontinent() { KontinentNavn = kontinent.ToString() };
 
-        villeDyrIKontinent.Krokodille = krokodilleFactory?.CreateKrokodille();
-        villeDyrIKontinent.Katt = kattFactory?.CreateKatt();
-        villeDyrIKontinent.Slange = slangeFactory?.CreateSlange();
+        villeDyrIKontinent.Krokodille = abstractDyrFactory?.CreateKrokodilleFactory()?.CreateKrokodille();
+        villeDyrIKontinent.Katt = abstractDyrFactory?.CreateKattFactory()?.CreateKatt();
+        villeDyrIKontinent.Slange = abstractDyrFactory?.CreateSlangeFactory()?.CreateSlange();
 
         //TODO Bjørn
         //TODO Rareste

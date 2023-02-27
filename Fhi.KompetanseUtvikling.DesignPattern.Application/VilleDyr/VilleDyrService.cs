@@ -1,11 +1,12 @@
 ﻿using Fhi.KompetanseUtvikling.DesignPattern.Domene.Entities.Krokodille;
 using Fhi.KompetanseUtvikling.DesignPattern.Domene.Entities.Slange;
 using Fhi.KompetanseUtvikling.DesignPattern.Domene.Enum;
+using Fhi.KompetanseUtvikling.DesignPattern.Domene.Interface.factory;
 
 namespace Fhi.KompetanseUtvikling.DesignPattern.Application.VilleDyr;
 public class VilleDyrService
 {
-    public VilleDyrIKontinent FinnVilleDyrIKontinent(Kontinent kontinent)
+    public VilleDyrIKontinent FinnVilleDyrIKontinent(Kontinent kontinent, IKattFactory kattFactory)
     {
         VilleDyrIKontinent villeDyrIKontinent = new VilleDyrIKontinent() { KontinentNavn = kontinent.ToString() };
 
@@ -17,6 +18,8 @@ public class VilleDyrService
                 {
                     Slangetype = Slangetype.Kveler
                 };
+                villeDyrIKontinent.Katt = kattFactory.CreateKatt();
+
                 //TODO Bjørn
                 //TODO Katt
                 //TODO Rareste
@@ -28,6 +31,7 @@ public class VilleDyrService
                 {
                     Slangetype = Slangetype.Gift
                 };
+                villeDyrIKontinent.Katt = kattFactory.CreateKatt();
                 //TODO Bjørn
                 //TODO Katt
                 //TODO Rareste
@@ -35,9 +39,11 @@ public class VilleDyrService
                 break;
 
             case Kontinent.Asia:
+                villeDyrIKontinent.Katt = kattFactory.CreateKatt();
                 //TODO
                 break;
             case Kontinent.Afrika:
+                villeDyrIKontinent.Katt = kattFactory.CreateKatt();
                 //TODO
                 break;
             case Kontinent.Australia:

@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Fhi.KompetanseUtvikling.DesignPattern.Domene.Entities.Krokodille;
 
 namespace Fhi.KompetanseUtvikling.DesignPattern.Domene.Interface.factory
 {
     public interface IKrokodilleFactory
     {
+        public Krokodille CreateKrokodille();
     }
 }
